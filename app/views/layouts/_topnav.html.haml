@@ -1,0 +1,31 @@
+.navbar.navbar-expand-lg.fixed-top.navbar-light.bg-light
+  .container
+    %a.navbar-brand{:href => "../"} BookStore
+    %button.navbar-toggler{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
+      %span.navbar-toggler-icon
+    #navbarResponsive.collapse.navbar-collapse
+      %ul.navbar-nav
+        %li.nav-item.dropdown
+          %a#themes.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            Category
+            %span.caret
+          .dropdown-menu{"aria-labelledby" => "themes"}
+            %a.dropdown-item{:href => ""} New
+            .dropdown-divider
+            %a.dropdown-item{:href => ""} List
+
+        %li.nav-item.dropdown
+          %a#download.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            Books
+            %span.caret
+          .dropdown-menu{"aria-labelledby" => "download"}
+            %a.dropdown-item{:href => ""} New Book
+            .dropdown-divider
+            %a.dropdown-item{:href => ""} New Book
+            %a.dropdown-item{:href => ""} List 
+
+      %ul.nav.navbar-nav.ml-auto
+        %li.nav-item
+          %a.nav-link{:href => "", :target => "_blank"} Help
+        %li.nav-item
+          %a.nav-link{:href => "", :target => "_blank"} Blog

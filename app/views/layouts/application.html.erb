@@ -3,12 +3,14 @@
   <head>
     <title>BookStore</title>
     <%= csrf_meta_tags %>
-
+    <link rel="stylesheet" href="https://bootswatch.com/4/simplex/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="https://bootswatch.com/_assets/css/custom.min.css">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <%= render partial: 'layouts/topnav'%>
     <%= yield %>
   </body>
 </html>
