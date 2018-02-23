@@ -8,30 +8,36 @@
         %li.nav-item.dropdown
           %a#themes.nav-link
             Search
-      
-        - if user_signed_in?
-          %li.nav-item.dropdown
-            %a#mn-categories.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-              Category
-              %span.caret
-            .dropdown-menu{"aria-labelledby" => "mn-categories"}
-              %a.dropdown-item{:href => new_category_path} New
-              .dropdown-divider
-              %a.dropdown-item{:href => categories_path} List
+        - Category.roots.each do |cat|
+          %li.nav-item
+            %a.nav-link{:href => "#", :target => "_blank"}
+              = cat.name
 
-          %li.nav-item.dropdown
-            %a#mn-books.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-              Books
-              %span.caret
-            .dropdown-menu{"aria-labelledby" => "mn-books"}
-              %a.dropdown-item{:href => new_book_path} New Book
-              .dropdown-divider
-              %a.dropdown-item{:href => books_path} List 
         %li.nav-item
           %a.nav-link{:href => "#", :target => "_blank"} Help
     
       %ul.nav.navbar-nav.ml-auto
-        %li.nav-item
-          %a.nav-link{:href => new_user_session_path} Login
-        %li.nav-item
-          %a.nav-link{:href => new_user_registration_path} Signup
+        - if user_signed_in?
+          %li.nav-item.dropdown
+            %a#mn-categories.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              Manage
+              %span.caret
+            .dropdown-menu{"aria-labelledby" => "mn-categories"}
+              %a.dropdown-item{:href => new_category_path} New Category
+              %a.dropdown-item{:href => categories_path} List Categories
+              .dropdown-divider
+              %a.dropdown-item{:href => new_book_path} New Book
+              %a.dropdown-item{:href => books_path} List Books      
+          %li.nav-item.dropdown
+            %a#mn-categories.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              Hi,
+              = current_user.email[0..2]
+              %span.caret
+            .dropdown-menu{"aria-labelledby" => "mn-categories"}
+              %a.dropdown-item{:href => destroy_user_session_path} Logout
+                     
+        - else
+          %li.nav-item
+            %a.nav-link{:href => new_user_session_path} Login
+          %li.nav-item
+            %a.nav-link{:href => new_user_registration_path} Signup
