@@ -1,0 +1,3 @@
+class BooksController < CmsController
+  
+end

@@ -23,9 +23,11 @@
             .dropdown-divider
             %a.dropdown-item{:href => ""} New Book
             %a.dropdown-item{:href => ""} List 
-
-      %ul.nav.navbar-nav.ml-auto
         %li.nav-item
           %a.nav-link{:href => "", :target => "_blank"} Help
+    
+      %ul.nav.navbar-nav.ml-auto
         %li.nav-item
-          %a.nav-link{:href => "", :target => "_blank"} Blog
+          %a.nav-link{:href => new_user_session_path} Login
+        %li.nav-item
+          %a.nav-link{:href => new_user_registration_path} Signup

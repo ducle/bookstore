@@ -1,0 +1,3 @@
+class CategoriesController < CmsController
+  
+end
