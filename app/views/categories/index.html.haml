@@ -12,6 +12,8 @@
       %th
         Parent
       %th
+        Sub-categories
+      %th
   %tbody
     - @categories.each do |category|
       %tr
@@ -19,6 +21,10 @@
           = category.name
         %td
           = category.parent_name
+        %td
+          - category.children.each do |cat|
+            = link_to category_path(cat) do
+              = cat.name
         %td
           = link_to category_path(category), class: 'btn btn-success' do
             %i.fa.fa-eye
