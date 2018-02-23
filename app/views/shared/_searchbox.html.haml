@@ -17,6 +17,9 @@
           .form-group
             %label(for="max_price") Max Price
             %input.form-control(type="number" id="max_price" name="max_price" placeholder="100000" value="#{params[:max_price]}")
-      %button.btn.btn-primary.btn-block(type="submit")
+      %button.btn.btn-primary(type="submit")
         %i.fa.fa-search
         Search
+      &nbsp;
+      %a.text-center.text-danger{href: search_path}
+        clear
