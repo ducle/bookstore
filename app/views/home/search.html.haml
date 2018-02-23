@@ -1,7 +1,23 @@
 .row
   .col-md-9
-    %p
-      About #{pluralize @result.results.total, 'result'} (0.44 seconds)
-    = render partial: 'shared/books', locals: {books: @result.records}
+    %div.row
+      .col-md-9
+        About #{pluralize @result.results.total, 'result'} 
+        - unless params[:query].blank?
+          for 
+          %mark #{params[:query]}
+        (0.44 seconds)
+      .col-md-3
+        .btn-group.float-right
+          %button.btn.btn-success.dropdown-toggle(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button")
+            Sort by
+          .dropdown-menu
+            - new_params = request.query_parameters
+            %a.dropdown-item{:href => "?#{new_params.merge({sort: 'price_low'}).to_param}"} Lowest Price
+            .dropdown-divider
+            %a.dropdown-item{:href => "?#{new_params.merge({sort: 'price_high'}).to_param}"} Highest Price
+    %br
+    %div
+      = render partial: 'shared/books', locals: {books: @result.records}
   .col-md-3
     = render partial: 'shared/searchbox'
