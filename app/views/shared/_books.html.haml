@@ -1,3 +1,3 @@
 .row
-  - 10.times do
-    = render partial: 'shared/book_card', locals: {book: nil}
+  - books.each do |book|
+    = render partial: 'shared/book_card', locals: {book: book}

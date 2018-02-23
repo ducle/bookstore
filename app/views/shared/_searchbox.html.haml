@@ -7,7 +7,7 @@
         %input.form-control(type="text" id="keyword" name="query" placeholder="title, category, isbn,.." value="#{params[:query]}")
       .form-group
         %label(for="category") Category
-        = select_tag :category_id, options_from_collection_for_select(Category.all, 'id', 'name', params[:category_id]), { include_blank: true, class: 'form-control'}
+        = select_tag :category_id, options_from_collection_for_select(all_categories, 'id', 'ancestry_name', params[:category_id]), { include_blank: true, class: 'form-control'}
       .row
         .col-sm-6
           .form-group

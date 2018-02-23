@@ -1,0 +1,24 @@
+.row
+  .col-md-9
+    %div.row
+      .col-md-9
+        There are #{pluralize @books.total_count, 'books'}  
+        %strong in category
+        %mark #{@category.ancestry_name}
+        (0.44 seconds)
+      .col-md-3
+        - if @books.count > 2
+          .btn-group.float-right
+            %button.btn.btn-success.dropdown-toggle(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button")
+              Sort by
+            .dropdown-menu
+              - new_params = request.query_parameters
+              %a.dropdown-item{:href => "?#{new_params.merge({sort: 'price_low'}).to_param}"} Lowest Price
+              .dropdown-divider
+              %a.dropdown-item{:href => "?#{new_params.merge({sort: 'price_high'}).to_param}"} Highest Price
+    %br
+    %div
+      = render partial: 'shared/books', locals: {books: @books}
+    = paginate @books
+  .col-md-3
+    = render partial: 'shared/searchbox'

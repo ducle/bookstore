@@ -7,6 +7,8 @@ class CategoriesController < CmsController
   end
 
   def show
+    @books = @category.books.page(params[:page])
+    params[:category_id] = @category.id
   end
 
   def new

@@ -1,5 +1,5 @@
 = simple_form_for @book do |f|
-  = f.input :category_id, as: :select, collection: Category.all.map{|cat| [cat.ancestry_name, cat.id]}
+  = f.input :category_id, as: :select, collection: all_categories.map{|cat| [cat.ancestry_name, cat.id]}
   = f.input :title
   = f.input :description
   = f.input :price

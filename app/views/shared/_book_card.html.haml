@@ -5,7 +5,9 @@
     .card-body
       %h5.card-title
         %a 
-          All the Ugly and Wonderful Things
+          = book.title
+          %span.badge.badge-pill.badge-success.float-right
+            = number_to_currency book.price, precision: 1
       %a.card-link
         Amazon
       %a.card-link
