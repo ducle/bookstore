@@ -20,7 +20,7 @@ class BooksController < CmsController
     @book = Book.new(book_param)
     if @book.save
       flash[:notice] = "Add book successfully."
-      redirect_to categories_path
+      redirect_to books_path
     else
       render :new
     end
@@ -29,7 +29,7 @@ class BooksController < CmsController
   def update
     if @book.update_attributes(book_param)
       flash[:notice] = "Update book successfully."
-      redirect_to categories_path
+      redirect_to books_path
     else
       render :edit
     end
@@ -41,20 +41,25 @@ class BooksController < CmsController
     else
       flash[:notice] = "Could not delete book."      
     end    
-    redirect_to categories_path
+    redirect_to books_path
   end
 
   private
   def book_param
     params.require(:book).permit(
       :title,
-      :book_id
+      :category_id, 
+      :description, 
+      :price, 
+      :isbn_10, 
+      :isbn_13,
+      :image
     )
   end
 
 
   def find_book
-    @book = Book.find(params[:id])
+    @book = Book.friendly.find(params[:id])
   end
   
 end
