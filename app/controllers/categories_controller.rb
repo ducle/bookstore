@@ -54,8 +54,7 @@ class CategoriesController < CmsController
     )
   end
 
-
   def find_cat
-    @category = Category.find(params[:id])
+    @category = Category.friendly.find(params[:id])
   end
 end

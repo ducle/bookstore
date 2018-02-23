@@ -13,4 +13,8 @@ class Book < ApplicationRecord
   def category_name
     return category.name if category
   end
+
+  def fore_category_name
+    category.ancestry_name if category
+  end
 end

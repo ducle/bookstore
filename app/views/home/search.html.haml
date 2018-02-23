@@ -1,5 +1,7 @@
 .row
   .col-md-9
-    = render partial: 'shared/books', locals: {books: @books}
+    %p
+      About #{pluralize @result.results.total, 'result'} (0.44 seconds)
+    = render partial: 'shared/books', locals: {books: @result.records}
   .col-md-3
     = render partial: 'shared/searchbox'
