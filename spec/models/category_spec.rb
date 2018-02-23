@@ -40,4 +40,61 @@ describe Category, type: :model do
     end
   end
 
+  context 'libs' do
+    it 'should include acts_as_list' do
+      cat = create(:category)
+      expect(cat.position).not_to be_nil
+    end
+
+    it 'should have friendly_id' do
+      cat = create(:category)
+      expect(cat.slug).not_to be_nil
+    end
+  end
+
+  context 'scopes' do
+
+    describe ".roots" do
+      before do
+        @cat1 = create(:category, name: 'cat1', parent_id: nil)
+        @cat2 = create(:category, name: 'cat2', parent_id: @cat1.id)
+      end
+      it 'returns orphan categories' do
+        expect(Category.roots.to_a).to match_array [@cat1]
+      end
+
+      it 'not return child categories' do
+        expect(Category.roots.to_a).not_to match_array [@cat2]
+      end
+    end
+  end
+
+  context 'instance methods' do
+    let(:cat1) { create(:category, name: 'cat3', parent_id: nil)}
+    let(:cat2) { create(:category, name: 'cat4', parent_id: cat1.id)}
+    describe ".parent_name" do
+      it 'returns parent name' do
+        expect(cat2.parent_name).to eq cat1.name
+      end
+      
+      it 'returns nil' do
+        expect(cat1.parent_name).to be_nil
+      end
+    end
+
+    describe ".ancestry_name" do
+      it 'returns parent and current name' do
+        expect(cat2.ancestry_name).to match(cat1.name)
+        expect(cat2.ancestry_name).to match(cat2.name)
+        expect(cat2.ancestry_name).to eq [cat1.name, cat2.name].join(' > ')
+      end
+      
+      it 'returns nil' do
+        expect(cat1.ancestry_name).to eq cat1.name
+      end
+    end
+
+  end
+
+
 end

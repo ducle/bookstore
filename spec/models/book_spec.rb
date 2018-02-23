@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'carrierwave/test/matchers'
 
 RSpec.describe Book, type: :model do
   context "db" do
@@ -45,4 +46,45 @@ RSpec.describe Book, type: :model do
     end
 
   end
+
+  context 'libs' do
+    it 'should mount ImageUploader' do
+      book = build(:book)
+      expect(book.image).to be_instance_of(ImageUploader)
+    end
+  end  
+
+  context 'instance methods' do
+    let(:cat1) { create(:category, name: 'cat1', parent_id: nil)}
+    let(:cat2) { create(:category, name: 'cat2', parent_id: nil)}
+    let(:book1) { create(:book, title: 'book1', category_id: cat1.id)}
+    let(:book2) { create(:book, title: 'book2', category_id: cat2.id, image: File.open("#{Rails.root}/spec/fixtures/img.jpg"))}
+
+    describe ".category_name" do
+      it 'returns cat name' do
+        expect(book1.category_name).to eq cat1.name
+      end
+    end
+
+    describe ".fore_category_name" do
+      it 'returns cat ancestry_name' do
+        expect(book1.fore_category_name).to match(cat1.ancestry_name)
+        expect(book2.fore_category_name).to match(cat2.ancestry_name)
+      end
+    end
+
+    describe ".thumb_url" do
+      it 'returns thumb version' do
+        # expect(book2.thumb_url).to have_dimensions(253, 379)
+        expect(book2.thumb_url).to eq book2.image.thumb.url
+
+      end
+      
+      it 'returns nil' do
+        expect(book1.thumb_url).to be_nil
+      end
+    end
+
+  end
+  
 end
