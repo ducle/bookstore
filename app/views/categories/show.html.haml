@@ -2,7 +2,7 @@
   .col-md-9
     %div.row
       .col-md-9
-        There are #{pluralize @books.total_count, 'books'}  
+        There #{@books.total_count > 1 ? 'are' : 'is'} #{pluralize @books.total_count, 'book'}  
         %strong in category
         %mark #{@category.ancestry_name}
         (0.44 seconds)

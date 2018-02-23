@@ -60,7 +60,7 @@ class BooksController < CmsController
 
 
   def find_book
-    @book = Book.friendly.find(params[:id])
+    @book = Book.find(params[:id])
   end
   
 end

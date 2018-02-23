@@ -1,21 +1,23 @@
 .col-md-4
   .card.book-card
     %a
-      = image_tag 'https://images-na.ssl-images-amazon.com/images/I/91p0SdYseNL._AC_UL320_SR214,320_.jpg', class: 'card-img-top'
+      = image_tag book.image.url, class: 'card-img-top'
     .card-body
       %span.price-circle
         = number_to_currency book.price, precision: 1      
       %h5.card-title
         %a 
           = book.title
-      %p
+      %p.small
         ISBN-10:
         = book.isbn_10
         %br
         ISBN-13:
         = book.isbn_13
       %a.card-link
-        Amazon
+        .badge.badge-primary
+          Amazon
       %a.card-link
-        Ebay
+        .badge.badge-success
+          Ebay
   %br
