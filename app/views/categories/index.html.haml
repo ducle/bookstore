@@ -20,6 +20,9 @@
         %td
           = category.parent_name
         %td
+          = link_to category_path(category), class: 'btn btn-success' do
+            %i.fa.fa-eye
+          &nbsp;
           = link_to edit_category_path(category), class: 'btn btn-warning' do
             %i.fa.fa-pencil
           &nbsp;
