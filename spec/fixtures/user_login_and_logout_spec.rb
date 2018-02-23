@@ -5,7 +5,7 @@ RSpec.describe "User logs in and logs out", :type => :feature do
   # browser driver configured in spec/support/capybara.rb
   scenario "with correct details", js: true do
 
-    create(:user, email: "someone@example.tld", password: "somepassword")
+    create(:user, email: "someone@bookstore.com", password: "somepassword")
 
     visit "/"
 
@@ -13,7 +13,7 @@ RSpec.describe "User logs in and logs out", :type => :feature do
     expect(page).to have_css("h2", text: "Log in")
     expect(current_path).to eq(new_user_session_path)
 
-    login "someone@example.tld", "somepassword"
+    login "someone@bookstore.com", "somepassword"
 
     expect(current_path).to eq "/"
     expect(page).to have_content "Hi, som"
@@ -22,17 +22,17 @@ RSpec.describe "User logs in and logs out", :type => :feature do
     click_link "Logout"
 
     expect(current_path).to eq "/"
-    expect(page).not_to have_content "someone@example.tld"
+    expect(page).not_to have_content "someone@bookstore.com"
 
   end
 
   scenario "with wrong password" do
 
-    create(:user, email: "e@example.tld", password: "test-password")
+    create(:user, email: "e@bookstore.com", password: "test-password")
 
     visit new_user_session_path
 
-    login "error@example.tld", "test-password2"
+    login "error@bookstore.com", "test-password2"
 
     expect(current_path).to eq(new_user_session_path)
     expect(page).not_to have_content "Hi, err"
