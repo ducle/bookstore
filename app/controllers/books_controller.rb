@@ -1,4 +1,5 @@
 class BooksController < CmsController
+  skip_before_action :authenticate_user!, only: [:show]  
   before_action :find_book, only: [:edit, :update, :destroy, :show]
 
   def index

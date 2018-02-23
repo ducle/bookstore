@@ -1,4 +1,5 @@
 class CategoriesController < CmsController
+  skip_before_action :authenticate_user!, only: [:show]
   before_action :find_cat, only: [:edit, :update, :destroy, :show]
 
   def index
