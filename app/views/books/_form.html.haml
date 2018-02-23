@@ -1,0 +1,5 @@
+= simple_form_for @book do |f|
+  -# = f.input :parent_id, as: :select, collection: Category.roots
+  = f.input :title
+  = f.submit class: 'btn btn-primary btn-lg'
+  

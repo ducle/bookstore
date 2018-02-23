@@ -11,25 +11,24 @@
       
         - if user_signed_in?
           %li.nav-item.dropdown
-            %a#themes.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            %a#mn-categories.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
               Category
               %span.caret
-            .dropdown-menu{"aria-labelledby" => "themes"}
+            .dropdown-menu{"aria-labelledby" => "mn-categories"}
               %a.dropdown-item{:href => new_category_path} New
               .dropdown-divider
               %a.dropdown-item{:href => categories_path} List
 
           %li.nav-item.dropdown
-            %a#download.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            %a#mn-books.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
               Books
               %span.caret
-            .dropdown-menu{"aria-labelledby" => "download"}
-              %a.dropdown-item{:href => ""} New Book
+            .dropdown-menu{"aria-labelledby" => "mn-books"}
+              %a.dropdown-item{:href => new_book_path} New Book
               .dropdown-divider
-              %a.dropdown-item{:href => ""} New Book
-              %a.dropdown-item{:href => ""} List 
+              %a.dropdown-item{:href => books_path} List 
         %li.nav-item
-          %a.nav-link{:href => "", :target => "_blank"} Help
+          %a.nav-link{:href => "#", :target => "_blank"} Help
     
       %ul.nav.navbar-nav.ml-auto
         %li.nav-item

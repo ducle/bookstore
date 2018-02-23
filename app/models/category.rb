@@ -7,6 +7,7 @@ class Category < ApplicationRecord
 
   scope :roots, -> { where(parent_id: nil) }
 
+  acts_as_list scope: [:parent_id]
 
   def parent_name
     return parent.name if parent
