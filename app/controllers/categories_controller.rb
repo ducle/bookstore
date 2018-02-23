@@ -7,7 +7,9 @@ class CategoriesController < CmsController
   end
 
   def show
-    @books = @category.books.page(params[:page])
+    cat_ids = [@category.id]
+    cat_ids += @category.children.pluck('id')
+    @books = Book.where(category_id: cat_ids).page(params[:page])
     params[:category_id] = @category.id
   end
 

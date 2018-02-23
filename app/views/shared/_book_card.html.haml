@@ -8,6 +8,12 @@
           = book.title
           %span.badge.badge-pill.badge-success.float-right
             = number_to_currency book.price, precision: 1
+      %p
+        ISBN-10:
+        = book.isbn_10
+        %br
+        ISBN-13:
+        = book.isbn_13
       %a.card-link
         Amazon
       %a.card-link
