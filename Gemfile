@@ -18,6 +18,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+gem 'devise'
 gem 'acts_as_list'
 gem 'friendly_id', '~> 5.1.0'
 gem 'carrierwave', '~> 1.0'
