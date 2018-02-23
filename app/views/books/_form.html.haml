@@ -1,5 +1,5 @@
 = simple_form_for @book do |f|
-  = f.input :category_id, as: :select, collection: Category.all
+  = f.input :category_id, as: :select, collection: Category.all.map{|cat| [[cat.parent_name, cat.name].compact.join(' > '), cat.id]}
   = f.input :title
   = f.input :description
   = f.input :price
@@ -7,4 +7,5 @@
   = f.input :isbn_13
   = f.input :image
   = f.submit class: 'btn btn-primary btn-lg'
-  
+  &nbsp;|&nbsp;
+  = link_to 'cancel', books_path

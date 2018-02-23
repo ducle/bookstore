@@ -66,7 +66,7 @@ module Searchable
             json.must do
               if !params[:query].blank?
                 json.multi_match do
-                  json.fields ['title', 'isbn_10^2', 'isbn_10^3']
+                  json.fields ['title^2', 'category_name', 'isbn_10^2', 'isbn_13^3']
                   json.query params[:query]
                 end
               end# end endif 
@@ -91,11 +91,26 @@ module Searchable
 
             json.filter do
               unless params[:category_id].blank?
-                ft_cat =  { 'category.id' => params[:category_id]}
+                ft_cat =  { 
+                  'category.id' => params[:category_id]
+                }
+                ft_pcat =  { 
+                  'category.parent_id' => params[:category_id]
+                }
+
                 json.child! do
-                  json.term ft_cat
+                  json.bool do
+                    json.should do
+                      json.child! do
+                        json.term ft_cat
+                      end
+                      json.child! do
+                        json.term ft_pcat
+                      end
+                    end
+                  end
                 end
-              end
+              end # end category_id
 
               ft_price = { price: {}}
               unless params[:min_price].blank?
