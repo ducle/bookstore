@@ -1,22 +1,5 @@
-.col-md-9
-.col-md-3
-  %h4 Search
-  = form_tag search_path, method: :get do 
-    .form-group
-      %label(for="keyword") Keyword
-      %input.form-control(type="text" id="keyword" name="query" placeholder="title, category, isbn,.." value="#{params[:query]}")
-    .form-group
-      %label(for="category") Category
-      = select_tag :category_id, options_from_collection_for_select(Category.all, 'id', 'name', params[:category_id]), { include_blank: true, class: 'form-control'}
-    .row
-      .col-sm-6
-        .form-group
-          %label(for="min_price") Min Price
-          %input.form-control(type="number" id="min_price" name="min_price" placeholder="0" value="#{params[:min_price]}")
-      .col-sm-6
-        .form-group
-          %label(for="max_price") Max Price
-          %input.form-control(type="number" id="max_price" name="max_price" placeholder="100000" value="#{params[:max_price]}")
-    %button.btn.btn-primary.btn-block(type="submit")
-      %i.fa.fa-search
-      Search
+.row
+  .col-md-9
+    = render partial: 'shared/books', locals: {books: @books}
+  .col-md-3
+    = render partial: 'shared/searchbox'
