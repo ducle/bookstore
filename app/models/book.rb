@@ -1,13 +1,15 @@
 class Book < ApplicationRecord
-  extend FriendlyId
+  # extend FriendlyId
   include Searchable
 
   belongs_to :category
 
   validates :title, presence: true
+  validates :isbn_10, presence: true
+  validates :isbn_13, presence: true
   validates :price, presence: true, numericality: { greater_than: 0}
 
-  friendly_id :title, use: :slugged
+  # friendly_id :title, use: :slugged
   mount_uploader :image, ImageUploader
 
   def category_name

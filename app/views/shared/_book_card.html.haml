@@ -3,11 +3,11 @@
     %a
       = image_tag 'https://images-na.ssl-images-amazon.com/images/I/91p0SdYseNL._AC_UL320_SR214,320_.jpg', class: 'card-img-top'
     .card-body
+      %span.price-circle
+        = number_to_currency book.price, precision: 1      
       %h5.card-title
         %a 
           = book.title
-          %span.badge.badge-pill.badge-success.float-right
-            = number_to_currency book.price, precision: 1
       %p
         ISBN-10:
         = book.isbn_10
