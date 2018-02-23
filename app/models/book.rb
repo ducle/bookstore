@@ -19,4 +19,8 @@ class Book < ApplicationRecord
   def fore_category_name
     category.ancestry_name if category
   end
+
+  def thumb_url
+    image.thumb.url if image
+  end
 end

@@ -1,7 +1,7 @@
 .col-md-4
   .card.book-card
     %a
-      = image_tag book.image.url, class: 'card-img-top'
+      = image_tag book.thumb_url, class: 'card-img-top'
     .card-body
       %span.price-circle
         = number_to_currency book.price, precision: 1      
