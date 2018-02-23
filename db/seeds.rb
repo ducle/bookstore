@@ -34,3 +34,4 @@
     Category.create!(name: ct, parent_id: root_cat.id)
   end
 end
+
