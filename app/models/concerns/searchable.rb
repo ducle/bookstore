@@ -15,18 +15,17 @@ module Searchable
       }
     } do
       mapping do
-        indexes :id, type: :integer, index: :not_analyzed
-        indexes :created_at, type: :date, index: :not_analyzed
-
-        indexes :category_name, type: :string
-        indexes :isbn_10, type: :string, index: :not_analyzed
-        indexes :isbn_13, type: :string, index: :not_analyzed
+        indexes :id, type: :integer, index: true
+        indexes :created_at, type: :date, index: true
+        indexes :title, type: :text
+        indexes :isbn_10, type: :keyword
+        indexes :isbn_13, type: :keyword
         indexes :price, type: :float
         indexes :category, type: :object do
-          indexes :id, type: :integer, index: :not_analyzed
-          indexes :name, type: :string
-          indexes :parent_id, type: :integer, index: :not_analyzed
-          indexes :parent_name, type: :string, index: :not_analyzed
+          indexes :id, type: :integer, index: true
+          indexes :name, type: :text
+          indexes :parent_id, type: :integer, index: true
+          indexes :parent_name, type: :text
         end
       end
 
@@ -40,7 +39,6 @@ module Searchable
           :price,
           :isbn_10,
           :isbn_13,
-          :category_name,
           :created_at
         ],
         methods: [:category_name],
@@ -55,6 +53,7 @@ module Searchable
 
     def self.search(params)
       query = build_search_query(params)
+      puts query
       response = __elasticsearch__.search(query)
       response
     end
@@ -63,44 +62,55 @@ module Searchable
       query = Jbuilder.encode do |json|
         json.query do
   
-          json.filtered do
-            if !params[:query].blank?
-              json.query do
+          json.bool do
+            json.must do
+              if !params[:query].blank?
                 json.multi_match do
                   json.fields ['title', 'isbn_10^2', 'isbn_10^3']
                   json.query params[:query]
                 end
-              end# end query
-            end # endif
-            json.filter do
-              # json.bool do
-                json.and do
+              end# end endif 
+            end # end must
+            
+            json.should do
+              if !params[:query].blank?
+                cat_query = {
+                  'category.name' => params[:query]
+                }
+                pcat_query = {
+                  'category.parent_name' => params[:query]
+                }
+                json.child! do
+                  json.term cat_query
+                end
+                json.child! do
+                  json.term pcat_query
+                end
+              end # end category
+            end # end must
 
-                  if !params[:query].blank? && params[:query].length > 0
-                    room_query = {'category.name' => params[:query]}
-                    json.child! do
-                      json.terms room_query
-                    end
-                  end # end category
-  
-                  if !params[:min_price].blank? && params[:max_price].length > 1
-                    price_query = {
-                      'price' => {
-                        gte: params[:min_price].to_f,
-                        lte: params[:max_price].to_f
-                      }
-                    }
-                    json.child! do
-                      json.range price_query
-                    end
-                  end
-                  
-                
-                end # end and
-  
-  
-              # end # end bool
-  
+            json.filter do
+              unless params[:category_id].blank?
+                ft_cat =  { 'category.id' => params[:category_id]}
+                json.child! do
+                  json.term ft_cat
+                end
+              end
+
+              ft_price = { price: {}}
+              unless params[:min_price].blank?
+                ft_price[:price][:gte] = params[:min_price].to_f
+              end
+              unless params[:max_price].blank?
+                ft_price[:price][:lte] = params[:max_price].to_f
+              end
+
+              unless ft_price[:price].blank?
+                json.child! do
+                  json.range ft_price
+                end
+              end
+              
             end # end filter
   
           end
@@ -124,6 +134,7 @@ module Searchable
           json.sort [sort, '_score']
         end
       end
+      query
     end
       
   end
