@@ -27,8 +27,16 @@ describe Category, type: :model do
   end
 
   context 'attributes' do
-    it "has email" do
-      expect(build(:subscription, email: "x@y.z")).to have_attributes(email: "x@y.z")
+    it "has name" do
+      expect(build(:category, name: "name")).to have_attributes(name: "name")
+    end
+
+    it "has position" do
+      expect(build(:category, position: 1)).to have_attributes(position: 1)
+    end
+
+    it "has slug" do
+      expect(build(:category, slug: 'slug')).to have_attributes(slug: 'slug')
     end
   end
 

@@ -56,6 +56,10 @@ end
 group :test do
   gem 'shoulda'
   gem 'shoulda-matchers'
+  gem 'rails-controller-testing'
+  gem 'database_cleaner'
+  # gem 'vcr'
+  gem 'webmock'  
 end
 
 group :development do
