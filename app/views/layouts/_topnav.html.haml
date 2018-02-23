@@ -6,23 +6,28 @@
     #navbarResponsive.collapse.navbar-collapse
       %ul.navbar-nav
         %li.nav-item.dropdown
-          %a#themes.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-            Category
-            %span.caret
-          .dropdown-menu{"aria-labelledby" => "themes"}
-            %a.dropdown-item{:href => ""} New
-            .dropdown-divider
-            %a.dropdown-item{:href => ""} List
+          %a#themes.nav-link
+            Search
+      
+        - if user_signed_in?
+          %li.nav-item.dropdown
+            %a#themes.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              Category
+              %span.caret
+            .dropdown-menu{"aria-labelledby" => "themes"}
+              %a.dropdown-item{:href => new_category_path} New
+              .dropdown-divider
+              %a.dropdown-item{:href => categories_path} List
 
-        %li.nav-item.dropdown
-          %a#download.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-            Books
-            %span.caret
-          .dropdown-menu{"aria-labelledby" => "download"}
-            %a.dropdown-item{:href => ""} New Book
-            .dropdown-divider
-            %a.dropdown-item{:href => ""} New Book
-            %a.dropdown-item{:href => ""} List 
+          %li.nav-item.dropdown
+            %a#download.nav-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              Books
+              %span.caret
+            .dropdown-menu{"aria-labelledby" => "download"}
+              %a.dropdown-item{:href => ""} New Book
+              .dropdown-divider
+              %a.dropdown-item{:href => ""} New Book
+              %a.dropdown-item{:href => ""} List 
         %li.nav-item
           %a.nav-link{:href => "", :target => "_blank"} Help
     

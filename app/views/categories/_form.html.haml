@@ -1,0 +1,5 @@
+= simple_form_for @category do |f|
+  = f.input :parent_id, as: :select, collection: Category.roots
+  = f.input :name
+  = f.submit
+  
