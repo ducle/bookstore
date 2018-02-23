@@ -1,6 +1,7 @@
 class Book < ApplicationRecord
   extend FriendlyId
-  
+  include Searchable
+
   belongs_to :category
 
   validates :title, presence: true
