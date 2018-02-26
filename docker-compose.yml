@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    image: postgres
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    environment:
+      - ELASTICSEARCH_HOST=elasticsearch
+    volumes:
+      - .:/bookstore
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - elasticsearch
+  elasticsearch:
+    image: elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+volumes:
+  elasticsearch: {}
+  postgres: {}
