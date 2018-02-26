@@ -15,8 +15,8 @@ RSpec.describe Book, type: :model do
       it { should have_db_column(:price).of_type(:decimal) }
       it { should have_db_column(:isbn_10).of_type(:string) }
       it { should have_db_column(:isbn_13).of_type(:string) }
-      it { should have_db_column(:image).of_type(:string) }   
-      it { should have_db_column(:slug).of_type(:string) }   
+      it { should have_db_column(:image).of_type(:string) }
+      it { should have_db_column(:slug).of_type(:string) }
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.describe Book, type: :model do
       book = build(:book)
       expect(book.image).to be_instance_of(ImageUploader)
     end
-  end  
+  end
 
   context 'instance methods' do
     let(:cat1) { create(:category, name: 'cat1', parent_id: nil)}
@@ -79,12 +79,38 @@ RSpec.describe Book, type: :model do
         expect(book2.thumb_url).to eq book2.image.thumb.url
 
       end
-      
+
       it 'returns nil' do
         expect(book1.thumb_url).to be_nil
       end
     end
 
   end
-  
+
+  context "elasticsearch" do
+    before :each do
+      root_cat = Category.create!(name: 'IT books')
+      c = root_cat.children.create!(name: 'Web development')
+
+      c.books.create(title: 'Ruby on Rails Tutorial (Rails 5)', price: 10, isbn_10: '1-16-148410-0', isbn_13: '978-1-16-148410-0')
+      c.books.create(title: 'AngularJS by Example', price: 11, isbn_10: '2-16-148410-0', isbn_13: '978-2-16-148410-0')
+      c.books.create(title: 'AngularJS Testing Cookbook', price: 12, isbn_10: '3-16-148410-0', isbn_13: '978-3-16-148410-0')
+      c.books.create(title: 'Shopify Application Development', price: 13, isbn_10: '4-16-148410-0', isbn_13: '978-4-16-148410-0')
+      Book.__elasticsearch__.refresh_index!
+    end
+
+    it 'should be indexed after deleting' do
+      b = Book.first
+      b.destroy
+      Book.__elasticsearch__.refresh_index!
+      expect(Book.search(query: 'rails').records.length).to eq(0)
+    end
+
+    it 'search books' do
+      expect(Book.search(query: 'rails').records.length).to eq(1)
+      expect(Book.search(query: 'Shopify').records.length).to eq(1)
+      expect(Book.search(query: 'AngularJS').records.length).to eq(2)
+    end
+  end
+
 end
