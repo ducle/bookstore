@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+How to setup
 
-Things you may want to cover:
+* Install Docker-Compose
 
-* Ruby version
+* Run `docker-compose`
 
-* System dependencies
+* Run `docker-compose run web rake db:create db:migrate db:seed`
 
-* Configuration
+* Run `docker-compose up`
 
-* Database creation
+* Access the app at localhost:3000
 
-* Database initialization
+Sign up users can post a book, with images, title, description, ISBN, etc..
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Users can search book (powered by Elasticsearch)
